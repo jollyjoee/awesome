@@ -48,7 +48,7 @@ try{
 	urlversion := Trim(getver.ResponseText, "`n")
 	If (FileVersion != urlversion)
 	{
-		;get the RAW link of "patch" in your repo. This will act as your patch notes pop up thing whenever there is a new update.
+;get the RAW link of "patch" in your repo. This will act as your patch notes pop up thing whenever there is a new update.
 		patch := ComObjCreate("WinHttp.WinHttpRequest.5.1")
 
 		patch.Open("GET", "https://raw.githubusercontent.com/jollyjoee/awesome/main/patch")
@@ -58,7 +58,7 @@ try{
 		MsgBox, 8244, Application Update, A new Version is available!`n`nUpdate now?`n`n`nPatchnotes: `n%patchnotes%`n`n`nCurrent Version: v%FileVersion% | Latest Version: v%urlversion%
 		IfMsgBox, Yes
 		{	
-			;Upload your file's latest version to your repository and get the RAW link and paste it below. This will automatically download whenever the user presses "Ok" in "Would you like to download?"
+;Upload your file's latest version to your repository and get the RAW link and paste it below. This will automatically download whenever the user presses "Ok" in "Would you like to download?"
 			
 			Run, https://github.com/jollyjoee/minmacrosub/blob/main/MinMacro.exe?raw=true
 		}
@@ -103,16 +103,16 @@ try{
    keyencrypted1 := Crypt.Encrypt.StrEncrypt(PCdata,key,, 1)
    keyencrypted := Crypt.Encrypt.StrEncrypt(keyencrypted1,key,, 1) 
 
-   ;%keyencrypted% <- this is the variable that your users must give you in order for you to paste it into your "users" file in your repo.
-   ;you can copy it to clipboard or put it into a gui, up to you
+;%keyencrypted% <- this is the variable that your users must give you in order for you to paste it into your "users" file in your repo.
+;you can copy it to clipboard or put it into a gui, up to you
 
    getver := ComObjCreate("WinHttp.WinHttpRequest.5.1")
 
-   ;get the RAW link for your "users" file in your repo. This will act as your main database for your user's licenses and expirations dates.
-   ;The format for putting licenses will be "Name(optional, just for reference) - license key that they will give you YYYY/MM/DD(expiration date)".
-   ;Example:
-   ;JollyJoe - 22jd1-20fawf9f29af09fuofhoa2ufhoau 2023/12/12
-   ;the above means: Jollyjoe's license will expire on December 12, 2023 (app will automatically be deactivated)
+;get the RAW link for your "users" file in your repo. This will act as your main database for your user's licenses and expirations dates.
+;The format for putting licenses will be "Name(optional, just for reference) - license key that they will give you YYYY/MM/DD(expiration date)".
+;Example:
+;JollyJoe - 22jd1-20fawf9f29af09fuofhoa2ufhoau 2023/12/12
+;the above means: Jollyjoe's license will expire on December 12, 2023 (app will automatically be deactivated)
 
    getver.Open("GET", "https://raw.githubusercontent.com/jollyjoee/awesome/main/users") ;examples here
    getver.Send()
