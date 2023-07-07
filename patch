@@ -1,2 +1,5 @@
 1. Hello
 2. How are you doing
+3. Change %Fileversion% in test app to be the same as your version here in the repository to stop this popup.
+4. Normally you would upload your file to this repository, get the raw download link, and paste the link onto the script on line #55
+this will make the "ok" button download the latest version uploaded (which will then have the matching %Fileversion% to stop the update popup and ultimately install the udpate.
