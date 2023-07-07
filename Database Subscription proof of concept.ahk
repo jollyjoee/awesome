@@ -1,3 +1,7 @@
+;Follow these steps
+;Create a github repository, inside it create 3 files named: version, patch, users
+;follow the comments below
+
 #Persistent
 #NoTrayIcon
 #SingleInstance Off
@@ -32,8 +36,10 @@ catch
 Match := RegExMatch(Response, "([0-9]{4}).([0-9]{2}).([0-9]{2})", Replace)
 Finaldate := RegExReplace(Replace, "-")
 Date := Finaldate
-;create a github repository and create a file within it and get the RAW link. This will act as our auto updater (whenever %Fileversion% is not equal to the version written on your github file, it will prompt an update.)
+
+;get the RAW link of your "version" file in your repo. This will act as our auto updater (whenever %Fileversion% is not equal to the version written on your github file, it will prompt an update.)
 FileVersion = 1
+
 try{
 	getver := ComObjCreate("WinHttp.WinHttpRequest.5.1")
 	getver.Open("GET", "https://github.com/jollyjoee/awesome/raw/main/version") 
@@ -42,16 +48,18 @@ try{
 	urlversion := Trim(getver.ResponseText, "`n")
 	If (FileVersion != urlversion)
 	{
-		;create a new file in your repository and get the raw link for it. This will act as your patch notes pop up thing whenever there is a new update.
+		;get the RAW link of "patch" in your repo. This will act as your patch notes pop up thing whenever there is a new update.
 		patch := ComObjCreate("WinHttp.WinHttpRequest.5.1")
+
 		patch.Open("GET", "https://raw.githubusercontent.com/jollyjoee/awesome/main/patch")
 		patch.Send()
 		patch.WaitForResponse()
 		patchnotes := Trim(patch.ResponseText, "`n")
 		MsgBox, 8244, Application Update, A new Version is available!`n`nUpdate now?`n`n`nPatchnotes: `n%patchnotes%`n`n`nCurrent Version: v%FileVersion% | Latest Version: v%urlversion%
 		IfMsgBox, Yes
-		{
+		{	
 			;Upload your file's latest version to your repository and get the RAW link and paste it below. This will automatically download whenever the user presses "Ok" in "Would you like to download?"
+			
 			Run, https://github.com/jollyjoee/minmacrosub/blob/main/MinMacro.exe?raw=true
 		}
 		IfMsgBox, No
@@ -94,14 +102,18 @@ try{
    PCdata = %PCdata%%A_WinDir%%A_OSType%%A_Temp%
    keyencrypted1 := Crypt.Encrypt.StrEncrypt(PCdata,key,, 1)
    keyencrypted := Crypt.Encrypt.StrEncrypt(keyencrypted1,key,, 1) 
-   ; %keyencrypted% this is the variable that your users must give you. 
+
+   ;%keyencrypted% <- this is the variable that your users must give you in order for you to paste it into your "users" file in your repo.
    ;you can copy it to clipboard or put it into a gui, up to you
+
    getver := ComObjCreate("WinHttp.WinHttpRequest.5.1")
-   ;create a github file and get the RAW link. This will act as your main database for your user's licenses and expirations dates.
+
+   ;get the RAW link for your "users" file in your repo. This will act as your main database for your user's licenses and expirations dates.
    ;The format for putting licenses will be "Name(optional, just for reference) - license key that they will give you YYYY/MM/DD(expiration date)".
    ;Example:
    ;JollyJoe - 22jd1-20fawf9f29af09fuofhoa2ufhoau 2023/12/12
    ;the above means: Jollyjoe's license will expire on December 12, 2023 (app will automatically be deactivated)
+
    getver.Open("GET", "https://raw.githubusercontent.com/jollyjoee/awesome/main/users") ;examples here
    getver.Send()
    getver.WaitForResponse()
@@ -113,24 +125,24 @@ try{
    exp := RegExReplace(expiration1, "/", "")
    FormatTime, expfinal, %exp%, yyyyMMdd
    Formattime, currentdate, %Date%, yyyyMMdd
-		If(expfinal > currentdate || expfinal = currentdate) ;if valid
+		If(expfinal > currentdate || expfinal = currentdate) ;if not expired
 		{
 			Gosub, RunApplication
 		}
-		Else If(expfinal < currentdate) ;if not valid
+		Else If(expfinal < currentdate) ;if expired
 		{
 			Gosub, Expired
 		}
-		else if (expfinal = "") ;if not valid
+		else if (expfinal = "") ;if expired
 	    {
 			Gosub, Expired	
 	    }
 	}
-	Else if (pos = 0) ;if not valid
+	Else if (pos = 0) ;if not registered
 	{
 		Gosub, Notreg
 	}
-	Else if (pos = "") ;if not valid
+	Else if (pos = "") ;if registered
 	{
 		Gosub, Notreg
 	}
