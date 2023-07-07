@@ -80,7 +80,7 @@ Else
 Return
 ;------------start of scripts------------;
 RunApplication:
-
+MsgBox, Active!`n`nExpiration:%expfinal% | Current Date:%currentdate%
 ExitApp,
 
 Expired:
