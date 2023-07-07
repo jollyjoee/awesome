@@ -19,7 +19,7 @@ MsgBox, 48, Application, Please run as administrator!
 ExitApp
 }
 }
-;---Gathers Date from the internet using a website that provides time through a txt format--;
+;---Gathers Date from the internet using a website that provides time through a txt format (online to avoid tampering/changing dates on pc)--;
 Try
 {
 WinHttp := ComObjCreate("WinHttp.WinHttpRequest.5.1")
@@ -30,7 +30,7 @@ Response := WinHttp.ResponseText
 }  
 catch
 {
-	;MsgBox, 16, Application, Could not retrieve time. Please check your internet connection and try again. Click "Ok" until the app runs.
+;MsgBox, 16, Application, Could not retrieve time. Please check your internet connection and try again. Click "Ok" until the app runs.
 	Reload
 } 
 Match := RegExMatch(Response, "([0-9]{4}).([0-9]{2}).([0-9]{2})", Replace)
