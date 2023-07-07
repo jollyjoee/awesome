@@ -60,7 +60,7 @@ try{
 		{	
 ;Upload your file's latest version to your repository and get the RAW link and paste it below. This will automatically download whenever the user presses "Ok" in "Would you like to download?"
 			
-			Run, https://github.com/jollyjoee/minmacrosub/blob/main/MinMacro.exe?raw=true
+			Run, https://github.com/jollyjoee/awesome/raw/main/Database%20Subscription%20proof%20of%20concept.ahk
 		}
 		IfMsgBox, No
 		{
